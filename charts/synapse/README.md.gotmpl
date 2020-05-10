@@ -1,0 +1,46 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionLine" . }}
+
+{{ template "chart.sourceLinkLine" . }}
+
+## Generating values for keys
+
+You can generate your own keys using the genKeys.sh script here.
+
+```
+./genKeys.sh <SERVER_NAME>
+```
+
+This will run a synapse docker container locally that generates an example config and all the keys.
+
+## Testing and development
+
+If you have a local cluster (I use [kind](https://github.com/kubernetes-sigs/kind)), then you can install a local version of the chart using a postgres container like so:
+
+```
+kubectl create ns synapse
+helm upgrade --namespace synapse --install synapse . --set postgres.localDev.enabled=true --set postgres.init.enabled=true
+```
+
+This will create a postgres database, initialize the matrix database, and run the synapse server. You can then access it by port-forwarding:
+
+```
+kubectl -n synapse port-forward svc/synapse 8080:80
+```
+
+Then browse to [http://localhost:8080](http://localhost:8080] in your browser to see the startup page.
+
+## A Warning About Secrets
+
+All secrets (including the server config) are stored as secrets as part of the chart. As of helm 3, all values passed in are also set as secrets. The issue then becomes twofold:
+
+1. You probably keep your values in git, unencrypted. You probably shouldn't in this case because they contain secrets.
+1. The secrets must be passed in from an insecure setting, such as your laptop.
+
+I have done my best to balance the ease-of-use and the security when building this chart. There are however much better practices that could be used for handling the secrets for this server. I highly suggest reading more about that before running this in a "production" setting.
+
+In the future, I will look at incorporating a [Vault](https://www.vaultproject.io/) integration with this chart to make it easier to keep these keys in a safe place.
+
+{{ template "chart.valuesSection" . }}

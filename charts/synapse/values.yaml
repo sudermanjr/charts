@@ -1,0 +1,143 @@
+# replicaCount -- The number of replicas to run. Currently only one is supported
+replicaCount: 1
+
+# storageClass -- The storage class to use for the persistent data volume mounted at /data. Also used for localDev postgres if enabled
+storageClass: "standard"
+
+# storageSize -- The size of the persistent volume that is attached to the synapse server for /data
+storageSize: "1Gi"
+
+# serverName -- The matrix server name to set in SYNAPSE_SERVER_NAME
+serverName: "matrix.example.com"
+
+# reportStats -- Set to "yes" or "no", is set as SYNAPSE_REPORT_STATS
+reportStats: "no"
+
+# regSharedSecret -- The value for registration_shared_secret
+regSharedSecret: "c681fdf2ca739edfe848e24ee93d0c51de7be836bd879c54bc57a007c96d3076"
+
+# macaroonSecretKey -- The value for macaroon_secret_key
+macaroonSecretKey: "469535da278b1a340112b7190217efb8ba846476c9abb20e166e7cc4eaf8f413"
+
+# signingKeyB64 -- The base64 encoded key to mount at /secrets/signing.key
+signingKeyB64: ZWQyNTUxOSBhX3JOcEogS0lDTHRqOVovL2lWMEZPbVpjR2tKSzArRDY1WFNvcHlJYlBmN3dvVytGNAo=
+
+image:
+  # image.repository -- The docker image repository to use
+  repository: matrixdotorg/synapse
+  # image.pullPolicy -- The image pull policy for all containers. Recommend leaving this as Always
+  pullPolicy: Always
+  # image.tag -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# imagePullSecrets -- A list of pullsecrets to use everywhere
+imagePullSecrets: []
+
+# nameOverride -- A template override for "name"
+nameOverride: ""
+
+# fullnameOverride -- A template override for "fullname"
+fullnameOverride: ""
+
+postgres:
+  # postgres.enabled -- If true, uses postgres as the database. If false, it is set to sqlite
+  enabled: true
+  # postgres.user -- The username for synapse to use when connecting to postgres
+  user: matrix
+  # postgres.password -- The password for postgres.user
+  password: randomlongpasswordpleasechangeme
+  # postgres.database -- The database name to use. Must be created, or use postgres.init
+  database: matrix
+  # postgres.host -- The host where your postgres server is located. Overriden if postgres.localDev.enabled is used
+  host: "some-postgres.example.com"
+  # postgres.port -- The port of the postgres server. Overriden if postgres.localDev.enabled is used
+  port: "5432"
+  # postgres.cpMin -- The cp_min setting in the synapse postgres config
+  cpMin: 5
+  # postgres.cpMax -- The cp_max setting in the synapse postgres config
+  cpMax: 10
+  init:
+    # postgres.init.enabled -- If true, a helm post-install hook will be used to initialize the database
+    enabled: false
+    # postgres.init.user -- The username to use for initializing the database
+    user: matrix
+    # postgres.init.password -- The password for the postgres.init.user
+    password: randomlongpasswordpleasechangeme
+    # postgres.init.database -- The default database on the server. Used for connecting initially
+    database: defaultdb
+    image:
+      # postgres.init.image.repository -- The image to use for the init hook. Must include the psql utility
+      repository: quay.io/sudermanjr/utilities
+      # postgres.init.image.tag -- The tag to use for the init hook image
+      tag: latest
+  localDev:
+    # postgres.localDev.enabled -- If true, will run a postgres container alongside the server for dev purposes
+    enabled: false
+    # postgres.localDev.storageSize -- The size of the volume to attach for postgres data
+    storageSize: "1Gi"
+    image:
+      # postgres.localDev.image.repository -- The image to use for the dev postgres container
+      repository: postgres
+      # postgres.localDev.image.tag -- THe version of the iamge to use for the dev postgres container
+      tag: 12
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created
+  create: true
+  # serviceAccount.annotations -- Annotations to add to the service account
+  annotations: {}
+  # serviceAccount.name -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# podAnnotations -- Additional annotations to add to the synapse server pod
+podAnnotations: {}
+
+# podSecurityContext -- The security context to add to the synapse server pod
+podSecurityContext: {}
+  #fsGroup: 2000
+
+# securityContext -- The security context to be used for the synapse server container. Currently this is required to run as root.
+securityContext:
+  runAsNonRoot: false
+  runAsUser: 0
+  allowPrivilegeEscalation: true
+
+service:
+  # service.type -- The service type to use for the synapse server
+  type: ClusterIP
+  # service.Port -- The port to expose on the service
+  port: 80
+
+ingress:
+  # ingress.enabled -- If true, creates an ingress for the synapse server
+  enabled: false
+  # ingress.annotations -- Annotations to add to the synapse server ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx-ingress
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  # ingress.hosts -- A list of hosts and paths to use for the synapse ingress
+  hosts:
+    - host: matrix.example.com
+      paths:
+        - /
+  # ingress.tls -- A TLS block for the synapse server ingress
+  tls:
+    - secretName: synapse-tls
+      hosts:
+        - matrix.example.com
+# resources -- A resources block for the synapse server container
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# nodeSelector -- A nodeSelector block to use on all pods in the chart
+nodeSelector: {}
+
+# tolerations -- A list of tolerations to add to all pods in the chart
+tolerations: []
+
+affinity: {}
