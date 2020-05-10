@@ -10,3 +10,5 @@ keywords:
   - synapse
 sources:
   - https://github.com/matrix-org/synapse/
+maintainers:
+  - name: sudermanjr
