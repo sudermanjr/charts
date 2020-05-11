@@ -80,7 +80,6 @@ sync_repo() {
 
         # Make sure index.yaml is synced last
         aws s3 cp "$index_dir/index.yaml" "$bucket/index.yaml"
-        aws s3 cp "index.html" "$bucket/index.html"
     else
         log_error "Exiting because unable to update index. Not safe to push update."
         exit 1
