@@ -4,7 +4,7 @@ A Helm chart to deploy matrix synapse server. https://github.com/matrix-org/syna
 
 Current chart version is `0.1.0`
 
-Source code can be found [here](https://github.com/sudermanjr/charts/tree/master/synapse)
+Source code can be found [here](https://github.com/sudermanjr/charts/tree/master/charts/synapse)
 
 ## Generating values for keys
 

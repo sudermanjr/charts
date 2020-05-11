@@ -12,6 +12,27 @@ Source code can be found [here](https://github.com/sudermanjr/charts/tree/master
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | postgresql | 8.6.4 |
 
+## Quickstart
+
+Fire up a [kind](https://github.com/kubernetes-sigs/kind) cluster.
+
+```
+kind create cluster
+```
+
+Install the chart
+
+```
+helm repo add sudermanjr https://charts.sudermanjr.com
+kubectl create ns mybb
+helm install mybb sudermanjr/mybb --namespace mybb
+kubectl -n mybb port-forward svc/mybb 8080:80
+```
+
+Now navigate to [http://localhost:8080](http://localhost:8080]
+
+Once you're there, you'll need to connect to the database by navigating the prompts. The defaults for the postgres username and password are shown in the values section below. The 'hostname' will be `mybb-postgresql`
+
 ## Chart Values
 
 | Key | Type | Default | Description |
@@ -32,12 +53,12 @@ Source code can be found [here](https://github.com/sudermanjr/charts/tree/master
 | nginx.resources | object | `{}` | The resources block for the nginx container |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext | object | `{}` | The security context to add to the pod |
-| postgresql.enabled | bool | `true` |  |
-| postgresql.postgresqlDatabase | string | `"mybb"` |  |
-| postgresql.postgresqlPassword | string | `"foobar"` |  |
-| postgresql.postgresqlUsername | string | `"mybb"` |  |
+| postgresql.enabled | string | `"tru"` | If true, installs a sub-chart to run postgresql as a DB |
+| postgresql.postgresqlDatabase | string | `"mybb"` | The database name to use on the local postgres DB. Input this in the setup UI for mybb |
+| postgresql.postgresqlPassword | string | `"foobar"` | The password to use on the local postgres DB. Input this in the setup UI for mybb |
+| postgresql.postgresqlUsername | string | `"mybb"` | The username to use on the local postgres DB. Input this in the setup UI for mybb |
 | replicaCount | int | `1` | The number of replicas. Currently only supports one |
-| resources | object | `{}` |  |
+| resources | object | `{}` | The resources block for the mybb pod |
 | securityContext | object | `{}` | The security context to be used for the container in the pod |
 | service.port | int | `80` | The port to use on the service |
 | service.type | string | `"ClusterIP"` | The service type for the service |

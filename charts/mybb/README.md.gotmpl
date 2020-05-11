@@ -7,4 +7,25 @@
 
 {{ template "chart.requirementsSection" . }}
 
+## Quickstart
+
+Fire up a [kind](https://github.com/kubernetes-sigs/kind) cluster.
+
+```
+kind create cluster
+```
+
+Install the chart
+
+```
+helm repo add sudermanjr https://charts.sudermanjr.com
+kubectl create ns mybb
+helm install mybb sudermanjr/mybb --namespace mybb
+kubectl -n mybb port-forward svc/mybb 8080:80
+```
+
+Now navigate to [http://localhost:8080](http://localhost:8080]
+
+Once you're there, you'll need to connect to the database by navigating the prompts. The defaults for the postgres username and password are shown in the values section below. The 'hostname' will be `mybb-postgresql`
+
 {{ template "chart.valuesSection" . }}

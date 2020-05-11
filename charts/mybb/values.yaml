@@ -60,11 +60,16 @@ ingress:
   #      - chart-example.local
 
 postgresql:
-  enabled: true
-  postgresqlPassword: foobar
+  # postgresql.enabled -- If true, installs a sub-chart to run postgresql as a DB
+  enabled: tru
+  # postgresql.postgresqlUsername -- The username to use on the local postgres DB. Input this in the setup UI for mybb
   postgresqlUsername: mybb
+  # postgresql.postgresqlPassword -- The password to use on the local postgres DB. Input this in the setup UI for mybb
+  postgresqlPassword: foobar
+  # postgresql.postgresqlDatabase -- The database name to use on the local postgres DB. Input this in the setup UI for mybb
   postgresqlDatabase: mybb
 
+# resources -- The resources block for the mybb pod
 resources: {}
   # limits:
   #   cpu: 100m
