@@ -37,7 +37,7 @@ metadata:
 stringData:
   PGUSER: {{ .Values.postgres.init.user | quote }}
   PGPASSWORD: {{ .Values.postgres.init.password | quote }}
-  {{- if .Values.postgres.localDev.enabled | quote }}
+  {{- if .Values.postgres.localDev.enabled }}
   PGHOST: "{{ include "synapse.fullname" . }}-dev-postgres"
   PGPORT: "5432"
   {{- else }}
