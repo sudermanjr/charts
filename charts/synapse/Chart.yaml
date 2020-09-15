@@ -4,7 +4,7 @@ description: A Helm chart to deploy matrix synapse server. https://github.com/ma
 type: application
 version: 0.1.1
 appVersion: v1.12.4
-home: https://github.com/sudermanjr/charts/tree/master/synapse
+home: https://github.com/sudermanjr/charts/tree/master/charts/synapse
 keywords:
   - matrix
   - synapse

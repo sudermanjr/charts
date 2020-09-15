@@ -1,0 +1,94 @@
+# replicaCount -- The number of replicas. Currently only supports one
+replicaCount: 1
+
+image:
+  # image.repository -- The Docker repository
+  repository: mybb/mybb
+  # image.pullPolicy -- The image pull policy. Recommend not changing this.
+  pullPolicy: Always
+
+# storageClass -- The storage class to use for the persistent volume
+storageClass: "standard"
+
+# imagePullSecrets -- A list of pull secrets for private repositories
+imagePullSecrets: []
+
+# nameOverride -- A template override for "name"
+nameOverride: ""
+
+# fullnameOverride -- A template override for fullname
+fullnameOverride: ""
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created
+  create: true
+  # serviceAccount.annotations -- Annotations to add to the service account
+  annotations: {}
+  # serviceAccount.name -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name:
+
+# podSecurityContext -- The security context to add to the pod
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# securityContext -- The security context to be used for the container in the pod
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  # service.type -- The service type for the service
+  type: ClusterIP
+  # service.port -- The port to use on the service
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+postgresql:
+  # postgresql.enabled -- If true, installs a sub-chart to run postgresql as a DB
+  enabled: tru
+  # postgresql.postgresqlUsername -- The username to use on the local postgres DB. Input this in the setup UI for mybb
+  postgresqlUsername: mybb
+  # postgresql.postgresqlPassword -- The password to use on the local postgres DB. Input this in the setup UI for mybb
+  postgresqlPassword: foobar
+  # postgresql.postgresqlDatabase -- The database name to use on the local postgres DB. Input this in the setup UI for mybb
+  postgresqlDatabase: mybb
+
+# resources -- The resources block for the mybb pod
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+nginx:
+  image:
+    # nginx.image.repository -- The image to use for the internal nginx server
+    repository: nginx
+    # nginx.image.tag -- The version of nginx container to use
+    tag: 1.17
+  # nginx.resources -- The resources block for the nginx container
+  resources: {}
