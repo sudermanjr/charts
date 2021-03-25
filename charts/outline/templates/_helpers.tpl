@@ -79,7 +79,7 @@ postgres://postgres:{{ .Values.postgresql.postgresqlPassword }}@{{ include "outl
 
 {{- define "redis.url" -}}
 {{- if .Values.redis.enabled }}
-redis://{{ include "outline.fullname" . }}-redis-master:6479
+redis://{{ include "outline.fullname" . }}-redis-master:6379
 {{- else }}
 {{ .Values.config.redisURL }}
 {{- end }}
