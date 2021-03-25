@@ -4,8 +4,17 @@
 
 replicaCount: 1
 
+config:
+  # -- Whether or not to create the secret to hold the config
+  createSecret: true
+  # -- The name of the secret that contains the env for configuration.
+  # only used if config.createSecret is false
+  name: you-created-it
+  env:
+    TEST: value
+
 image:
-  repository: nginx
+  repository: outlinewiki/outline
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
