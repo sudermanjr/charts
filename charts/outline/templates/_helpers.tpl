@@ -60,3 +60,27 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "postgresql.url" -}}
+{{- if .Values.postgresql.enabled }}
+postgres://postgres:{{ .Values.postgresql.postgresqlPassword }}@{{ include "outline.fullname" . }}-postgresql:5532/outline
+{{- else }}
+{{ .Values.config.databaseURL }}
+{{- end }}
+{{- end }}
+
+{{- define "postgresql.urlTest" -}}
+{{- if .Values.postgresql.enabled }}
+postgres://postgres:{{ .Values.postgresql.postgresqlPassword }}@{{ include "outline.fullname" . }}-postgresql:5532/outline
+{{- else }}
+{{ .Values.config.databaseURLTest }}
+{{- end }}
+{{- end }}
+
+{{- define "redis.url" -}}
+{{- if .Values.redis.enabled }}
+redis://{{ include "outline.fullname" . }}-redis-master:6479
+{{- else }}
+{{ .Values.config.redisURL }}
+{{- end }}
+{{- end }}

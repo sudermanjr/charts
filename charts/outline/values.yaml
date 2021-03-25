@@ -12,13 +12,15 @@ config:
   secretName: you-created-it
   # -- Additional environment variable keypairs for configuration
   env:
-    DEFAULT_LANGUAGE: en_US
+    DEFAULT_LANGUAGE: Y2FjaGUscHJlc2VudGVycyxldmVudHMsZW1haWxzLG1haWxlcix1dGlscyxtdWx0aXBsYXllcixzZXJ2ZXIsc2VydmljZXM=
+    DEBUG: Y2FjaGUscHJlc2VudGVycyxldmVudHMsZW1haWxzLG1haWxlcix1dGlscyxtdWx0aXBsYXllcixzZXJ2ZXIsc2VydmljZXM=
   # -- Should point to the fully qualified, publicly accessible URL.
   url: 'http://localhost:3000'
   # -- Internal port to serve on
-  port: 3000
-  # -- URL of postgres. Used if built-in postgres is disabled and createSecret is true
+  port: '3000'
+  # -- URL of postgres db. Used if built-in postgres is disabled and createSecret is true
   databaseURL: ""
+  # -- URL of postgres test db. Used if built-in postgres is disabled and createSecret is true
   databaseURLTest: ""
   # -- URL of redis. Used if built-in redis is disabled and createSecret is true
   redisURL: ""
@@ -40,9 +42,13 @@ config:
     allowedDomains: ""
 
 postgresql:
-  enabled: false
+  enabled: true
+  # -- The admin password for built-in postgres. Username is postgres
+  postgresqlPassword: 59c05b0be92b6095b1d33ab398a54c6987add725fd7d8b0ced5ffccd2c9929a2
+  postgresqlDatabase: outline
 redis:
-  enabled: false
+  enabled: true
+  usePassword: false
 minio:
   enabled: false
 
