@@ -35,10 +35,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - secretRef:
-                name: {{ include "outline.fullname" . }} 
+                name: {{ include "outline.fullname" . }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.config.port }}
               protocol: TCP
           livenessProbe:
             httpGet:

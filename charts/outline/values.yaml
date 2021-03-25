@@ -9,9 +9,42 @@ config:
   createSecret: true
   # -- The name of the secret that contains the env for configuration.
   # only used if config.createSecret is false
-  name: you-created-it
+  secretName: you-created-it
+  # -- Additional environment variable keypairs for configuration
   env:
-    TEST: value
+    DEFAULT_LANGUAGE: en_US
+  # -- Should point to the fully qualified, publicly accessible URL.
+  url: 'http://localhost:3000'
+  # -- Internal port to serve on
+  port: 3000
+  # -- URL of postgres. Used if built-in postgres is disabled and createSecret is true
+  databaseURL: ""
+  databaseURLTest: ""
+  # -- URL of redis. Used if built-in redis is disabled and createSecret is true
+  redisURL: ""
+  # -- Generate a unique random key, you can use `openssl rand -hex 32` in terminal
+  secretKey: 9430cad3bc716024794a4085b538d6312692a97ef3459a94709245f55ffb163e
+  # -- Generate a unique random key, you can use `openssl rand -hex 32` in terminal
+  utilsSecret: f96ac69ead8567b7f2fe3e87015327f76735e3830b9f1d40d782ec68ff544d65
+  slack:
+    enabled: false
+    key: ""
+    secret: ""
+    verificationToken: ""
+    appID: ""
+    messageActions: "true"
+  googleAuth:
+    enabled: false
+    clientID: ""
+    clientSecret: ""
+    allowedDomains: ""
+
+postgresql:
+  enabled: false
+redis:
+  enabled: false
+minio:
+  enabled: false
 
 image:
   repository: outlinewiki/outline
