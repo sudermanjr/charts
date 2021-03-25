@@ -84,3 +84,8 @@ redis://{{ include "outline.fullname" . }}-redis-master:6479
 {{ .Values.config.redisURL }}
 {{- end }}
 {{- end }}
+
+{{- define "s3UploadURL" -}}
+http://{{ include "outline.fullname" . }}-minio:9000
+{{- end }}
+

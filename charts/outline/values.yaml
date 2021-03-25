@@ -50,7 +50,8 @@ redis:
   enabled: true
   usePassword: false
 minio:
-  enabled: false
+  enabled: true
+  defaultBuckets: "outline"
 
 image:
   repository: outlinewiki/outline

@@ -36,6 +36,19 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ include "outline.fullname" . }}
+          {{- if .Values.minio.enabled }}
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "outline.fullname" . }}-minio
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "outline.fullname" . }}-minio
+                  key: secret-key
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.config.port }}
