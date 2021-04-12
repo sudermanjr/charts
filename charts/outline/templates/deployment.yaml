@@ -27,6 +27,31 @@ spec:
       serviceAccountName: {{ include "outline.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: {{ .Chart.Name }}-init-db
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "outline.fullname" . }}
+          command:
+            - yarn
+            - sequelize:migrate
+          {{- if .Values.minio.enabled }}
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "outline.fullname" . }}-minio
+                  key: access-key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "outline.fullname" . }}-minio
+                  key: secret-key
+          {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -53,14 +78,6 @@ spec:
             - name: http
               containerPort: {{ .Values.config.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
