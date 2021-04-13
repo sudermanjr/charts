@@ -1,12 +1,11 @@
-{{- if .Values.deployment.enabled }}
+{{- if .Values.daemonset.enabled }}
 apiVersion: apps/v1
-kind: Deployment
+kind: Daemonset
 metadata:
   name: {{ include "stress.fullname" . }}
   labels:
     {{- include "stress.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "stress.selectorLabels" . | nindent 6 }}

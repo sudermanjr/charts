@@ -1,5 +1,12 @@
-# -- The number of replicas to run
-replicaCount: 1
+deployment:
+  # -- If true, will be deployed as a deployment. Not recommended to set true along with daemonset.enabled
+  enabled: true
+  # -- The number of replicas to run. Only affects deployments.
+  replicaCount: 1
+
+daemonset:
+  # -- If True, will be run as a daemonset. Not recommended to set true along with deployment.enabled
+  enabled: false
 
 # -- The stress command to run, with all of the flags. Try stress -c 1
 stressCmd: 'stress --help'
