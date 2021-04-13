@@ -11,34 +11,20 @@ Set the `stressCmd` to a command that you might run with stress, such as `stress
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ubuntu"` |  |
-| image.tag | string | `""` |  |
+| image.pullPolicy | string | `"Always"` | The pullPolicy. Usually best set to Always |
+| image.repository | string | `"ubuntu"` | The image repository. Probably don't change this unless you know what's going on here. |
+| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths | list | `[]` |  |
-| ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `0` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext.readOnlyRootFilesystem | bool | `false` |  |
-| securityContext.runAsGroup | int | `0` |  |
-| securityContext.runAsNonRoot | bool | `false` |  |
-| securityContext.runAsUser | int | `0` |  |
-| service.port | int | `80` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
-| stressCmd | string | `"stress --help"` |  |
+| podSecurityContext | object | `{"fsGroup":0}` | This is intentionally insecure in order to accomodate how this chart runs. |
+| replicaCount | int | `1` | The number of replicas to run |
+| resources | object | `{}` | How you set this will largely depend on how you want to use this chart. |
+| securityContext | object | `{"readOnlyRootFilesystem":false,"runAsGroup":0,"runAsNonRoot":false,"runAsUser":0}` | This is intentionally insecure in order to accomodate how this chart runs. |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| stressCmd | string | `"stress --help"` | The stress command to run, with all of the flags. Try stress -c 1 |
 | tolerations | list | `[]` |  |
