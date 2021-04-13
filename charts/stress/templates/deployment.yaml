@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "stress.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "stress.selectorLabels" . | nindent 6 }}
