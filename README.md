@@ -12,10 +12,14 @@ helm search repo sudermanjr
 
 ## Charts
 
-### [synapse](/chars/synapse)
+### [synapse](/charts/synapse)
 
 This chart is for installing a synapse server for matrix.
 
 Other Reading:
   - [matrix.org](https://matrix.org/)
   - [synapse](https://matrix.org/docs/projects/server/synapse)
+
+### [stress](/charts/stress)
+
+Allows a user to create stress on kubernetes nodes using the linux utility stress.
