@@ -2,8 +2,8 @@ apiVersion: v2
 name: synapse
 description: A Helm chart to deploy matrix synapse server. https://github.com/matrix-org/synapse
 type: application
-version: 0.2.0
-appVersion: v1.26.0
+version: 1.0.0
+appVersion: v1.49.0
 home: https://github.com/sudermanjr/charts/tree/master/charts/synapse
 keywords:
   - matrix
