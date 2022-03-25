@@ -5,11 +5,18 @@
 replicaCount: 1
 
 config:
+  # -- If set, then all other config will be ignored and this secret will be used.
   existingSecretName: ""
-  # -- config.dbConnectionString is a secret and should be passed as such
-  dbConnectionString: "pg://host:port?u=user&p=password&d=database"
-  # -- config.jwtSecret is a secret and should be passed as such
-  jwtSecret: "569a1821-0a93-45e8-87ab-eb857f20a010"
+  # -- config.dbConnectionString is a secret and should be passed as such. If balnk, dbConnectionJSon is used, otherwise set as NC_DB env var. Example: pg://host:port?u=user&p=password&d=database
+  dbConnectionString: ""
+  # -- config.dbConnectionJSON will be set as NC_DB_JSON if config.dbConnectionString is empty
+  dbConnectionJSON: |
+    {
+        host: 'localhost',
+        user: 'user',
+        password: 'password',
+        database: 'database',
+    }
   # -- config.additionalConfig is a list of environment variables to place in the config secret. Values must be strings
   additionalConfig:
     NC_PUBLIC_URL: "https://nocodb.example.com"
@@ -17,8 +24,8 @@ config:
     NC_DISABLE_TELE: 'true'
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: nocodb/nocodb
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
