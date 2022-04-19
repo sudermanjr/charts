@@ -69,6 +69,10 @@ spec:
               value: "{{ .Values.securityContext.runAsUser }}"
             - name: GID
               value: "{{ .Values.securityContext.runAsUser }}"
+          {{- range $key, $value := .Values.extraEnv }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:

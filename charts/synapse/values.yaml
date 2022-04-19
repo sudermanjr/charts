@@ -13,6 +13,12 @@ serverName: "matrix.example.com"
 # reportStats -- Set to "yes" or "no", is set as SYNAPSE_REPORT_STATS
 reportStats: "no"
 
+extraEnv:
+  SYNAPSE_CACHE_FACTOR: '2.0'
+
+## If true, registraiton is enabled on the server
+enableRegistration: False
+
 # regSharedSecret -- The value for registration_shared_secret
 regSharedSecret: "c681fdf2ca739edfe848e24ee93d0c51de7be836bd879c54bc57a007c96d3076"
 
